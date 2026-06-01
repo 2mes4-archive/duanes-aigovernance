@@ -1,0 +1,47 @@
+{
+  "name": "duanes-aigovernance",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for Duanes — Inter-application AI Governance Framework",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "license": "Apache-2.0",
+  "author": "2mes4 <hello@2mes4.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/2mes4/duanes-aigovernance.git",
+    "directory": "sdks/typescript"
+  },
+  "homepage": "https://github.com/2mes4/duanes-aigovernance",
+  "bugs": {
+    "url": "https://github.com/2mes4/duanes-aigovernance/issues"
+  },
+  "keywords": [
+    "ai",
+    "governance",
+    "openai",
+    "proxy",
+    "edge",
+    "cost-tracking",
+    "telemetry"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint src/",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "openai": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "tsup": "^8.0.0",
+    "vitest": "^1.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

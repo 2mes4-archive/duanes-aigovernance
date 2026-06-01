@@ -1,0 +1,31 @@
+services:
+  server:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.server
+    ports:
+      - "8080:8080"
+    volumes:
+      - server-data:/app/data
+    environment:
+      - RUST_LOG=duanes=info
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  collector:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.collector
+    ports:
+      - "9090:9090"
+    volumes:
+      - collector-data:/app/data
+    environment:
+      - RUST_LOG=duanes=info
+
+volumes:
+  server-data:
+  collector-data:

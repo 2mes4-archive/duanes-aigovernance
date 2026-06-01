@@ -1,0 +1,41 @@
+FROM rust:1.85.0-slim AS builder
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    pkg-config \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY Cargo.toml Cargo.lock ./
+COPY crates/duanes-common/Cargo.toml crates/duanes-common/Cargo.toml
+COPY crates/duanes-core/Cargo.toml crates/duanes-core/Cargo.toml
+COPY crates/duanes-storage/Cargo.toml crates/duanes-storage/Cargo.toml
+COPY crates/duanes-local-runner/Cargo.toml crates/duanes-local-runner/Cargo.toml
+COPY crates/duanes-server/Cargo.toml crates/duanes-server/Cargo.toml
+COPY crates/duanes-collector/Cargo.toml crates/duanes-collector/Cargo.toml
+
+RUN mkdir -p crates/duanes-common/src && echo "" > crates/duanes-common/src/lib.rs \
+    && mkdir -p crates/duanes-core/src && echo "" > crates/duanes-core/src/lib.rs \
+    && mkdir -p crates/duanes-storage/src && echo "" > crates/duanes-storage/src/lib.rs \
+    && mkdir -p crates/duanes-local-runner/src && echo "" > crates/duanes-local-runner/src/lib.rs \
+    && mkdir -p crates/duanes-server/src && echo "fn main(){}" > crates/duanes-server/src/main.rs \
+    && mkdir -p crates/duanes-collector/src && echo "fn main(){}" > crates/duanes-collector/src/main.rs
+
+COPY . .
+
+RUN cargo build --release --bin duanes-server
+
+FROM debian:bookworm-slim
+
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /app/target/release/duanes-server /usr/local/bin/
+COPY config/ /etc/duanes/
+
+EXPOSE 8080
+
+ENTRYPOINT ["duanes-server"]
+CMD ["--config", "/etc/duanes/duanes.example.toml", "--host", "0.0.0.0", "--port", "8080"]

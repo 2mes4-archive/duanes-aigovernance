@@ -1,0 +1,49 @@
+# Build artifacts
+/target/
+**/*.rs.bk
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+*.egg
+
+# Node
+node_modules/
+services/dashboard/dist/
+
+# Database
+*.db
+*.db-wal
+*.db-shm
+
+# Environment
+.env
+.env.*
+
+# Build output
+build/
+out/
+
+# Cargo lock for libraries
+# (keep Cargo.lock for binaries)
+crates/*/Cargo.lock
+bindings/*/Cargo.lock

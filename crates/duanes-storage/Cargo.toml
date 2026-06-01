@@ -1,0 +1,20 @@
+[package]
+name = "duanes-storage"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Configurable persistence engine with privacy-aware storage and async sync"
+
+[dependencies]
+duanes-common = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+rusqlite = { workspace = true }
+parking_lot = { workspace = true }
+reqwest = { workspace = true }
+thiserror = { workspace = true }
+regex = "1"

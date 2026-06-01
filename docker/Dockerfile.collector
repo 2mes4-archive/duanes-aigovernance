@@ -1,0 +1,27 @@
+FROM rust:1.85.0-slim AS builder
+
+WORKDIR /app
+
+COPY Cargo.toml Cargo.lock ./
+COPY crates/duanes-common/Cargo.toml crates/duanes-common/Cargo.toml
+COPY crates/duanes-collector/Cargo.toml crates/duanes-collector/Cargo.toml
+
+RUN mkdir -p crates/duanes-common/src && echo "" > crates/duanes-common/src/lib.rs \
+    && mkdir -p crates/duanes-collector/src && echo "fn main(){}" > crates/duanes-collector/src/main.rs
+
+COPY . .
+
+RUN cargo build --release --bin duanes-collector
+
+FROM debian:bookworm-slim
+
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /app/target/release/duanes-collector /usr/local/bin/
+
+EXPOSE 9090
+
+ENTRYPOINT ["duanes-collector"]
+CMD ["--host", "0.0.0.0", "--port", "9090"]

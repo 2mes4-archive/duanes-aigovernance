@@ -1,0 +1,21 @@
+[package]
+name = "duanes-ios"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "UniFFI bindings for iOS (Swift)"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+duanes-common = { workspace = true }
+duanes-core = { workspace = true }
+duanes-storage = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+uniffi = "0.28"
+
+[build-dependencies]
+uniffi = { version = "0.28", features = ["build"] }

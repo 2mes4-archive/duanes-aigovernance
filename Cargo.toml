@@ -1,0 +1,62 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/duanes-common",
+    "crates/duanes-core",
+    "crates/duanes-storage",
+    "crates/duanes-local-runner",
+    "crates/duanes-server",
+    "crates/duanes-collector",
+    "bindings/duanes-c",
+    "bindings/duanes-wasm",
+    "services/telemetry-processor",
+]
+
+exclude = [
+    "bindings/duanes-android",
+    "bindings/duanes-ios",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+repository = "https://github.com/2mes4/duanes-aigovernance"
+homepage = "https://github.com/2mes4/duanes-aigovernance"
+description = "Inter-application AI governance framework — built in Rust for the edge"
+authors = ["2mes4 <hello@2mes4.com>"]
+rust-version = "1.85"
+
+[workspace.dependencies]
+duanes-common = { path = "crates/duanes-common" }
+duanes-core = { path = "crates/duanes-core" }
+duanes-storage = { path = "crates/duanes-storage" }
+duanes-local-runner = { path = "crates/duanes-local-runner" }
+
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
+thiserror = "2"
+anyhow = "1"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+reqwest = { version = "0.12", features = ["json", "stream"] }
+axum = { version = "0.8", features = ["macros"] }
+tower = "0.5"
+tower-http = { version = "0.6", features = ["cors", "trace"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
+toml = "0.8"
+config = "0.14"
+rand = "0.9"
+parking_lot = "0.12"
+dashmap = "6"
+bytes = "1"
+futures = "0.3"
+tokio-stream = "0.1"
+eventsource-stream = "0.2"
+hex = "0.4"
+sha2 = "0.10"
+base64 = "0.22"
